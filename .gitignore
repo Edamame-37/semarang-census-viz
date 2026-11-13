@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+DASHBOARD_PLAN.md
+
+# Test artifacts
+coverage
+playwright-report
+test-results

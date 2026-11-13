@@ -4,4 +4,14 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: './tests/setup.js',
+    exclude: ['tests/e2e/**', 'node_modules/**'],
+    css: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+    },
+  },
 })
