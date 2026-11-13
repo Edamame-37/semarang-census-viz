@@ -1,75 +1,75 @@
-/**
- * @file App.jsx
- * @description Komponen root aplikasi visualisasi sensus Semarang.
- * Menampilkan halaman awal interaktif dengan React dan Vite.
- */
-
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
+import { useDashboardState } from './app/useDashboardState.js'
+import ComparisonBarChart from './components/ComparisonBarChart.jsx'
+import DashboardFilters from './components/DashboardFilters.jsx'
+import DensityBarChart from './components/DensityBarChart.jsx'
+import DensityGrowthQuadrantChart from './components/DensityGrowthQuadrantChart.jsx'
+import DistrictDetailPanel from './components/DistrictDetailPanel.jsx'
+import DistrictTable from './components/DistrictTable.jsx'
+import ExecutiveScorecards from './components/ExecutiveScorecards.jsx'
+import Header from './components/Header.jsx'
+import MethodologyPanel from './components/MethodologyPanel.jsx'
+import SexRatioDivergingChart from './components/SexRatioDivergingChart.jsx'
+import { dashboardData } from './data/loader.js'
+import { exportDistrictsCsv } from './utils/export.js'
 
-/**
- * Komponen utama App
- * @returns {JSX.Element} Elemen tampilan utama aplikasi
- */
+function DataError({ errors }) {
+  return (
+    <main className="data-error" role="alert">
+      <p className="eyebrow">Validasi gagal</p>
+      <h1>Data tidak dapat ditampilkan</h1>
+      <p>Dataset tidak memenuhi kontrak dashboard. Tidak ada grafik yang dirender agar nilai invalid tidak terlihat sebagai nol.</p>
+      <ul>{errors.map((error) => <li key={error}>{error}</li>)}</ul>
+    </main>
+  )
+}
+
 function App() {
-  // State untuk menyimpan nilai penghitung interaktif
-  const [count, setCount] = useState(0)
+  const dashboard = useDashboardState(dashboardData.districts)
+  if (dashboardData.status === 'error') return <DataError errors={dashboardData.errors} />
+
+  const { districts, cityBenchmark, provenance } = dashboardData
+  const highlightDistrictId = dashboard.searchMatch?.districtId ?? null
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="Hero background" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Semarang Census Viz</h1>
-          <p>
-            Aplikasi Visualisasi Data Sensus Kota Semarang berbasis React.js
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((prevCount) => prevCount + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-shell" id="top">
+      <a className="skip-link" href="#main-content">Lewati ke konten utama</a>
+      <Header onExport={() => exportDistrictsCsv(dashboard.filteredDistricts)} />
+      <main id="main-content">
+        <ExecutiveScorecards benchmark={cityBenchmark} districts={districts} />
+        <DashboardFilters state={dashboard.state} visibleCount={dashboard.tableRows.length} searchMatch={dashboard.searchMatch} onChange={dashboard.update} onReset={dashboard.reset} />
 
-      <div className="ticks"></div>
+        <section className="dashboard-zone" aria-labelledby="zone-two-title">
+          <div className="section-heading">
+            <div><p className="section-index">02 / Analisis inti</p><h2 id="zone-two-title">Pola kepadatan dan pertumbuhan</h2></div>
+            <p className="section-heading__note">Klik elemen data untuk menghubungkan sorotan antargrafik.</p>
+          </div>
+          <div className="analysis-grid analysis-grid--main">
+            <DensityBarChart districts={dashboard.filteredDistricts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
+            <DensityGrowthQuadrantChart districts={dashboard.filteredDistricts} allDistricts={districts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} selectedQuadrant={dashboard.state.selectedQuadrant} onSelect={dashboard.selectDistrict} onQuadrantChange={(selectedQuadrant) => dashboard.update({ selectedQuadrant })} />
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Dokumentasi & Sumber Daya</h2>
-          <p>Pelajari lebih lanjut tentang React dan Vite</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank" rel="noreferrer">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank" rel="noreferrer">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn React
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section className="dashboard-zone" aria-labelledby="zone-three-title">
+          <div className="section-heading">
+            <div><p className="section-index">03 / Perbandingan rinci</p><h2 id="zone-three-title">Bandingkan seluruh indikator</h2></div>
+            <p className="section-heading__note">Panjang dan posisi adalah encoding utama; warna hanya memperkuat kategori.</p>
+          </div>
+          <DistrictDetailPanel district={dashboard.selectedDistrict} benchmark={cityBenchmark} onClose={() => dashboard.selectDistrict(dashboard.state.selectedDistrictId)} />
+          <div className="analysis-grid analysis-grid--split">
+            <ComparisonBarChart districts={dashboard.filteredDistricts} metric={dashboard.state.metric} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onMetricChange={(metric) => dashboard.update({ metric })} onSelect={dashboard.selectDistrict} />
+            <SexRatioDivergingChart districts={dashboard.filteredDistricts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
+          </div>
+          <DistrictTable rows={dashboard.tableRows} selectedDistrictId={dashboard.state.selectedDistrictId} tableSort={dashboard.state.tableSort} onSort={(tableSort) => dashboard.update({ tableSort })} onSelect={dashboard.selectDistrict} onReset={dashboard.reset} />
+        </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <MethodologyPanel provenance={provenance} />
+      </main>
+      <footer className="site-footer">
+        <p><strong>Data:</strong> 2023 <span>•</span> <strong>Pertumbuhan:</strong> 2020–2023 <span>•</span> <strong>Sumber:</strong> BPS Kota Semarang, Kota Semarang Dalam Angka 2024, Tabel 3.1.1.</p>
+        <p>Disusun untuk analisis dan pendidikan; bukan produk resmi BPS atau Pemerintah Kota Semarang.</p>
+      </footer>
+    </div>
   )
 }
 

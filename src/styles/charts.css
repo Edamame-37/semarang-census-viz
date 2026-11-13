@@ -1,0 +1,96 @@
+.chart-card {
+  min-width: 0;
+  padding: 18px 0 28px;
+  border-top: 2px solid var(--text);
+}
+
+.chart-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 92px;
+}
+
+.chart-card h2 { margin: 0; font-size: 1.18rem; font-weight: 700; letter-spacing: -.015em; }
+.chart-card__description { max-width: 700px; margin: 6px 0 0; color: var(--text-muted); font-size: .78rem; }
+.chart-card__actions { flex: 0 0 auto; }
+.chart-index { color: var(--text-muted); letter-spacing: .04em; }
+.compact-field select { min-width: 160px; }
+.chart { width: 100%; min-height: 420px; }
+.chart--tall { min-height: 570px; }
+.chart--scatter { min-height: 475px; }
+.chart-footnote {
+  margin: 10px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: .72rem;
+}
+
+.quadrant-chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 8px 0 4px;
+  border-block: 1px solid var(--border);
+}
+
+.quadrant-chip {
+  display: grid;
+  gap: 1px;
+  padding: 9px 10px;
+  border: 0;
+  border-left: 4px solid;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quadrant-chip + .quadrant-chip { border-top: 0; }
+.quadrant-chip strong { font-size: .88rem; }
+.quadrant-chip span { color: var(--text-muted); font-size: .66rem; }
+.quadrant-chip--A { border-left-color: var(--group-a); } .quadrant-chip--B { border-left-color: var(--group-b); } .quadrant-chip--C { border-left-color: var(--group-c); } .quadrant-chip--D { border-left-color: var(--group-d); }
+.quadrant-chip.is-active { background: var(--surface-muted); box-shadow: inset 0 -3px var(--text); }
+.quadrant-legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px 12px; margin-top: 10px; color: var(--text-muted); font-size: .68rem; }
+.legend-dot { display: inline-block; width: 8px; height: 8px; margin-right: 4px; }
+.legend-dot--A { background: var(--group-a); } .legend-dot--B { background: var(--group-b); } .legend-dot--C { background: var(--group-c); } .legend-dot--D { background: var(--group-d); }
+
+.empty-state {
+  display: grid;
+  min-height: 300px;
+  place-content: center;
+  justify-items: center;
+  padding: 32px;
+  border-block: 1px solid var(--border);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.table-card { margin-top: 0; }
+.table-scroll-hint { display: none; margin: 0 0 8px; color: var(--text-muted); font-size: .74rem; }
+.table-scroll { max-width: 100%; overflow-x: auto; border-block: 1px solid var(--border-strong); }
+table { width: 100%; min-width: 1050px; border-collapse: collapse; font-size: .8rem; font-variant-numeric: tabular-nums; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { position: sticky; left: 0; z-index: 1; background: inherit; text-align: left; }
+thead { background: var(--surface-muted); }
+th button { padding: 0; border: 0; background: transparent; color: var(--text); font-size: .72rem; font-weight: 720; cursor: pointer; }
+tbody tr { background: var(--surface); }
+tbody tr:hover { background: #f2f5f7; }
+tbody tr.is-selected { background: var(--primary-soft); box-shadow: inset 3px 0 var(--primary); }
+tbody tr:last-child td { border-bottom: 0; }
+.table-row-button { padding: 3px 0; border: 0; background: transparent; color: var(--primary); font-weight: 700; text-decoration: underline; text-decoration-color: transparent; cursor: pointer; }
+.table-row-button:hover { text-decoration-color: currentColor; }
+.group-badge { display: inline-grid; width: 23px; height: 23px; place-content: center; color: #fff; font-size: .7rem; font-weight: 800; }
+.group-badge--A { background: var(--group-a); } .group-badge--B { background: var(--group-b); } .group-badge--C { background: var(--group-c); } .group-badge--D { background: var(--group-d); }
+
+@media (max-width: 700px) {
+  .chart-card { padding-bottom: 24px; }
+  .chart-card__header { min-height: 0; padding-inline: 0; flex-direction: column; }
+  .chart-card__actions, .compact-field, .compact-field select { width: 100%; }
+  .chart { min-height: 400px; }
+  .chart--tall { min-height: 560px; }
+  .quadrant-chips { grid-template-columns: repeat(2, 1fr); }
+  .quadrant-legend { grid-template-columns: 1fr; }
+  .table-scroll-hint { display: block; }
+}
