@@ -10,6 +10,8 @@
 
 Semua bar magnitude dimulai dari nol. Diverging bar menggambar `rasio − 100`, bukan rasio asli dari nol. Hue A–D menyatakan identitas kategori, bukan kualitas. Nilai presisi selalu tersedia melalui tooltip dan tabel semantik.
 
-Search adalah locate/highlight; filter A–D mengurangi record; selection menyorot record yang sama tanpa menyembunyikan record lain. Empat scorecard selalu memakai benchmark kota dan tidak mengikuti filter.
+Search adalah locate/highlight; filter A–D mengurangi record; selection dari chart atau tabel menyorot record yang sama dan memperbarui panel detail tanpa menyembunyikan record lain. Empat scorecard selalu memakai benchmark kota dan tidak mengikuti filter. Comparison bar menyediakan metric tabs dan sorting eksplisit, sedangkan tabel menjadi alternatif aksesibel untuk seluruh nilai presisi.
+
+Reference line selalu disertai caption horizontal agar benchmark dapat dipahami tanpa membaca label vertikal. Label permanen pada scatterplot dan diverging bar dibatasi pada kecamatan yang analitis penting atau sedang dipilih; detail lainnya tersedia melalui tooltip dan tabel.
 
 Tidak ada line chart karena dataset bukan time series. Tidak ada choropleth karena tidak ada geometri tervalidasi. Tidak ada 3D, indeks gabungan, atau causal claim.

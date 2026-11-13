@@ -44,11 +44,12 @@ npm run test:e2e
 
 ## Interaksi
 
-- Search mencari dan menyorot kecamatan; tabel menampilkan hasil pencarian.
+- Search mencari dan menyorot kecamatan tanpa menghilangkan konteks seluruh kecamatan pada grafik; tabel menampilkan hasil pencarian.
 - Filter A–D menyaring chart dan tabel, tanpa mengubah benchmark scorecard kota.
 - Klik titik, bar, atau nama tabel menghubungkan selection ke panel detail.
-- Comparison chart dapat berganti pangsa, populasi, pertumbuhan, dan kepadatan.
-- CSV export menyebut unit/periode pada header dan membedakan 16 record dari subset terfilter.
+- Comparison chart memakai tab yang mudah ditemukan untuk berganti antara pangsa, pertumbuhan, dan kepadatan, serta dapat diurutkan naik/turun.
+- Panel detail membandingkan nilai kecamatan terpilih dengan agregat atau benchmark Kota Semarang.
+- Unduh dataset lengkap selalu menghasilkan 16 record; ekspor hasil filter hanya memuat subset yang sedang tampil. CSV memakai BOM UTF-8 dan unit/periode pada header.
 
 ## Data dan metodologi
 

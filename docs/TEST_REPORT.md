@@ -19,11 +19,11 @@ Tanggal eksekusi: 13 November 2026 (Asia/Jakarta).
 | `npm run data:prepare` | PASS — 16 kecamatan + benchmark + provenance dihasilkan. |
 | `npm run data:validate` | PASS — benchmark, extrema, ties, totals, dan A/B/C/D sesuai oracle. |
 | `npm run lint` | PASS — 0 error, 0 warning. |
-| `npm run test` | PASS — 23/23 tests pada 3 file. |
+| `npm run test` | PASS — 31/31 tests pada 4 file. |
 | `npm run build` | PASS — output `dist/` berhasil dibuat. |
-| `npm run test:e2e` | PASS — 12/12 Chromium tests. |
+| `npm run test:e2e` | PASS — 16/16 Chromium tests. |
 
-Build menghasilkan JavaScript sekitar 832 kB minified / 274 kB gzip dan peringatan Vite untuk chunk di atas 500 kB. Peringatan berasal terutama dari ECharts; build tetap sukses dan interaksi browser teruji. Tidak ada network API runtime.
+Build menghasilkan JavaScript 838,31 kB minified / 274,94 kB gzip dan peringatan Vite untuk chunk di atas 500 kB. Peringatan berasal terutama dari ECharts; build tetap sukses dan interaksi browser teruji. Tidak ada network API runtime.
 
 ## Browser dan viewport
 
@@ -34,7 +34,9 @@ Build menghasilkan JavaScript sekitar 832 kB minified / 274 kB gzip dan peringat
 | tablet-chromium | 768×1024 | PASS | PASS | 0 violations |
 | mobile-chromium | 390×844 | PASS | PASS | 0 violations |
 
-Playwright menjalankan production preview melalui `npm run preview -- --host 127.0.0.1`. Pemeriksaan mencakup selection Mijen, nilai detail, filter A, empty state D, scorecard invariant, reset, search Semarang Timur, console errors, dan overflow halaman. Tabel mobile sengaja dapat horizontal-scroll dan memiliki instruksi visual.
+Playwright menjalankan production preview melalui `npm run preview -- --host 127.0.0.1`. Pemeriksaan mencakup selection Mijen, nilai panel detail, filter A, empty state D, scorecard invariant, reset, search Semarang Timur, clear search, metric switching, urutan grafik, scope dan nama file ekspor, console errors, overflow halaman, serta audit axe. Tabel mobile sengaja dapat horizontal-scroll dan memiliki instruksi visual.
+
+Unit/component tests juga memeriksa derivasi temuan utama, benchmark dari data kanonik, extrema dan ties, sorting numerik, search/selection terkoordinasi, panel perbandingan kecamatan–kota, serta struktur CSV lengkap dan terfilter.
 
 Screenshot aktual:
 
