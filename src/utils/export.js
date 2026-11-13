@@ -17,19 +17,20 @@ function downloadBlob(blob, filename) {
   URL.revokeObjectURL(url)
 }
 
-export function exportDistrictsCsv(records) {
+export function buildDistrictsCsv(records) {
   const escapeCell = (value) => `"${String(value).replaceAll('"', '""')}"`
   const rows = [CSV_HEADERS.map(([header]) => header), ...records.map((record) => CSV_HEADERS.map(([, field]) => record[field]))]
-  const csv = `\uFEFF${rows.map((row) => row.map(escapeCell).join(',')).join('\r\n')}`
-  const scope = records.length === 16 ? 'all_16' : `filtered_${records.length}`
-  downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), `semarang_demografi_2023_${scope}.csv`)
+  return `\uFEFF${rows.map((row) => row.map(escapeCell).join(',')).join('\r\n')}`
 }
 
-export function exportChartImage(chart, title) {
-  if (!chart) return
-  const dataUrl = chart.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#ffffff', excludeComponents: ['toolbox'] })
-  const anchor = document.createElement('a')
-  anchor.href = dataUrl
-  anchor.download = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`
-  anchor.click()
+function downloadDistrictsCsv(records, filename) {
+  downloadBlob(new Blob([buildDistrictsCsv(records)], { type: 'text/csv;charset=utf-8' }), filename)
+}
+
+export function exportCompleteDataset(records) {
+  downloadDistrictsCsv(records, 'semarang_demografi_2023_all_16.csv')
+}
+
+export function exportFilteredDistricts(records) {
+  downloadDistrictsCsv(records, `semarang_demografi_2023_filtered_${records.length}.csv`)
 }

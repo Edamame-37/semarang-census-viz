@@ -11,7 +11,7 @@ import Header from './components/Header.jsx'
 import MethodologyPanel from './components/MethodologyPanel.jsx'
 import SexRatioDivergingChart from './components/SexRatioDivergingChart.jsx'
 import { dashboardData } from './data/loader.js'
-import { exportDistrictsCsv } from './utils/export.js'
+import { exportCompleteDataset } from './utils/export.js'
 
 function DataError({ errors }) {
   return (
@@ -34,10 +34,10 @@ function App() {
   return (
     <div className="app-shell" id="top">
       <a className="skip-link" href="#main-content">Lewati ke konten utama</a>
-      <Header onExport={() => exportDistrictsCsv(dashboard.filteredDistricts)} />
+      <Header onExport={() => exportCompleteDataset(districts)} />
       <main id="main-content">
         <ExecutiveScorecards benchmark={cityBenchmark} districts={districts} />
-        <DashboardFilters state={dashboard.state} visibleCount={dashboard.tableRows.length} searchMatch={dashboard.searchMatch} onChange={dashboard.update} onReset={dashboard.reset} />
+        <DashboardFilters state={dashboard.state} districts={districts} visibleCount={dashboard.tableRows.length} searchMatch={dashboard.searchMatch} onChange={dashboard.update} onClearSearch={dashboard.clearSearch} onReset={dashboard.reset} />
 
         <section className="dashboard-zone" aria-labelledby="zone-two-title">
           <div className="section-heading">
@@ -45,8 +45,8 @@ function App() {
             <p className="section-heading__note">Klik elemen data untuk menghubungkan sorotan antargrafik.</p>
           </div>
           <div className="analysis-grid analysis-grid--main">
-            <DensityBarChart districts={dashboard.filteredDistricts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
-            <DensityGrowthQuadrantChart districts={dashboard.filteredDistricts} allDistricts={districts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} selectedQuadrant={dashboard.state.selectedQuadrant} onSelect={dashboard.selectDistrict} onQuadrantChange={(selectedQuadrant) => dashboard.update({ selectedQuadrant })} />
+            <DensityGrowthQuadrantChart districts={dashboard.filteredDistricts} allDistricts={districts} benchmark={cityBenchmark} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} selectedQuadrant={dashboard.state.selectedQuadrant} onSelect={dashboard.selectDistrict} onQuadrantChange={(selectedQuadrant) => dashboard.update({ selectedQuadrant })} />
+            <DensityBarChart districts={dashboard.filteredDistricts} allDistricts={districts} benchmark={cityBenchmark} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
           </div>
         </section>
 
@@ -55,9 +55,9 @@ function App() {
             <div><p className="section-index">03 / Perbandingan rinci</p><h2 id="zone-three-title">Bandingkan seluruh indikator</h2></div>
             <p className="section-heading__note">Panjang dan posisi adalah encoding utama; warna hanya memperkuat kategori.</p>
           </div>
-          <DistrictDetailPanel district={dashboard.selectedDistrict} benchmark={cityBenchmark} onClose={() => dashboard.selectDistrict(dashboard.state.selectedDistrictId)} />
+          <DistrictDetailPanel district={dashboard.selectedDistrict} benchmark={cityBenchmark} onClose={dashboard.clearSelection} />
           <div className="analysis-grid analysis-grid--split">
-            <ComparisonBarChart districts={dashboard.filteredDistricts} metric={dashboard.state.metric} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onMetricChange={(metric) => dashboard.update({ metric })} onSelect={dashboard.selectDistrict} />
+            <ComparisonBarChart districts={dashboard.filteredDistricts} benchmark={cityBenchmark} metric={dashboard.state.metric} sortDirection={dashboard.state.chartSortDirection} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onMetricChange={(metric) => dashboard.update({ metric })} onSortChange={(chartSortDirection) => dashboard.update({ chartSortDirection })} onSelect={dashboard.selectDistrict} />
             <SexRatioDivergingChart districts={dashboard.filteredDistricts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
           </div>
           <DistrictTable rows={dashboard.tableRows} selectedDistrictId={dashboard.state.selectedDistrictId} tableSort={dashboard.state.tableSort} onSort={(tableSort) => dashboard.update({ tableSort })} onSelect={dashboard.selectDistrict} onReset={dashboard.reset} />

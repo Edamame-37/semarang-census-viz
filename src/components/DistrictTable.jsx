@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { formatNumber, formatPercent } from '../utils/numberFormat.js'
-import { exportDistrictsCsv } from '../utils/export.js'
+import { exportFilteredDistricts } from '../utils/export.js'
 import ChartCard from './ChartCard.jsx'
 
 const COLUMNS = [
@@ -28,23 +28,25 @@ export default function DistrictTable({ rows, selectedDistrictId, tableSort, onS
     return formatNumber(record[field])
   }
 
+  const getAriaSort = (field) => tableSort.field === field ? (tableSort.direction === 'asc' ? 'ascending' : 'descending') : 'none'
+
   return (
-    <ChartCard id="table" className="table-card" eyebrow="Nilai presisi & alternatif aksesibel" title="Tabel 16 kecamatan" description={`Menampilkan ${rows.length} dari 16 kecamatan.`} actions={<button className="button button--secondary" type="button" onClick={() => exportDistrictsCsv(rows)}>Ekspor {rows.length} baris</button>}>
+    <ChartCard id="table" className="table-card" eyebrow="Nilai presisi & alternatif aksesibel" title="Tabel 16 kecamatan" description={`Menampilkan ${rows.length} dari 16 kecamatan.`} actions={<button className="button button--secondary" type="button" onClick={() => exportFilteredDistricts(rows)}>Ekspor hasil filter ({rows.length})</button>}>
       {rows.length ? (
         <>
-        <p className="table-scroll-hint">Geser tabel ke samping untuk melihat seluruh indikator.</p>
-        <div className="table-scroll" tabIndex="0" aria-label="Tabel dapat digulir horizontal pada layar kecil">
-          <table>
-            <thead><tr>{COLUMNS.map(([field, label]) => <th scope="col" key={field}><button type="button" onClick={() => toggleSort(field)}>{label}<span aria-hidden="true">{tableSort.field === field ? (tableSort.direction === 'asc' ? ' ↑' : ' ↓') : ' ↕'}</span></button></th>)}</tr></thead>
-            <tbody>
-              {sortedRows.map((record) => (
-                <tr key={record.districtId} className={record.districtId === selectedDistrictId ? 'is-selected' : ''}>
-                  {COLUMNS.map(([field]) => <td key={field} data-label={COLUMNS.find(([key]) => key === field)[1]}>{field === 'districtName' ? <button type="button" className="table-row-button" onClick={() => onSelect(record.districtId)} aria-pressed={record.districtId === selectedDistrictId}>{record.districtName}</button> : field === 'quadrant' ? <span className={`group-badge group-badge--${record.quadrant}`}>{record.quadrant}</span> : formatCell(record, field)}</td>)}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          <p className="table-scroll-hint">Geser tabel ke samping untuk melihat seluruh indikator.</p>
+          <div className="table-scroll" tabIndex="0" aria-label="Tabel dapat digulir horizontal pada layar kecil">
+            <table>
+              <thead><tr>{COLUMNS.map(([field, label]) => <th scope="col" aria-sort={getAriaSort(field)} key={field}><button type="button" onClick={() => toggleSort(field)}>{label}<span aria-hidden="true">{tableSort.field === field ? (tableSort.direction === 'asc' ? ' ↑' : ' ↓') : ' ↕'}</span></button></th>)}</tr></thead>
+              <tbody>
+                {sortedRows.map((record) => (
+                  <tr key={record.districtId} className={record.districtId === selectedDistrictId ? 'is-selected' : ''}>
+                    {COLUMNS.map(([field, label]) => <td key={field} data-label={label}>{field === 'districtName' ? <button type="button" className="table-row-button" onClick={() => onSelect(record.districtId)} aria-pressed={record.districtId === selectedDistrictId}>{record.districtName}</button> : field === 'quadrant' ? <span className={`group-badge group-badge--${record.quadrant}`} aria-label={`Kelompok ${record.quadrant}`}>{record.quadrant}</span> : formatCell(record, field)}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </>
       ) : <div className="empty-state"><p>Tidak ada kecamatan yang cocok dengan filter atau pencarian.</p><button className="button button--secondary" type="button" onClick={onReset}>Reset filter</button></div>}
     </ChartCard>

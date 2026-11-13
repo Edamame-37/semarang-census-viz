@@ -1,11 +1,8 @@
 import { formatNumber, formatPercent } from '../utils/numberFormat.js'
+import { getKeyFindings } from '../data/selectors.js'
 
 export default function ExecutiveScorecards({ benchmark, districts }) {
-  const insights = [
-    { value: districts.filter(({ populationShareAbove10 }) => populationShareAbove10).length, label: 'kecamatan berpangsa >10%' },
-    { value: districts.filter(({ densityAboveCity }) => densityAboveCity).length, label: 'di atas kepadatan kota' },
-    { value: districts.filter(({ quadrant }) => quadrant === 'A').length, label: 'kecamatan dalam grup A' },
-  ]
+  const insights = getKeyFindings(districts)
   const cards = [
     { label: 'Penduduk kota', value: formatNumber(benchmark.populationThousand), unit: 'ribu jiwa', note: 'Agregat resmi BPS 2023' },
     { label: 'Kepadatan kota', value: formatNumber(benchmark.densityPerKm2), unit: 'jiwa/km²', note: 'Acuan 16 kecamatan' },
@@ -30,7 +27,7 @@ export default function ExecutiveScorecards({ benchmark, districts }) {
       </div>
       <div className="insight-summary" aria-label="Temuan terverifikasi seluruh kota">
         <span>Temuan utama</span>
-        {insights.map((insight) => <p key={insight.label}><strong>{insight.value}</strong> {insight.label}</p>)}
+        {insights.map((insight, index) => <p key={insight}><strong>{index + 1}.</strong> {insight}</p>)}
       </div>
     </section>
   )

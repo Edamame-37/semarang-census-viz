@@ -14,19 +14,19 @@ export const COLORS = Object.freeze({
 })
 
 export const baseChartOptions = {
-  animationDuration: 250,
+  animationDuration: 180,
   toolbox: {
     right: 0,
     top: 0,
     feature: { saveAsImage: { title: 'Simpan grafik sebagai PNG', name: 'dashboard-demografi-semarang', pixelRatio: 2, backgroundColor: '#ffffff' } },
   },
-  textStyle: { fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif", color: COLORS.text },
+  textStyle: { fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif", color: COLORS.text, fontSize: 12 },
   tooltip: {
     trigger: 'item',
     confine: true,
     backgroundColor: '#ffffff',
     borderColor: COLORS.grid,
-    textStyle: { color: COLORS.text },
-    extraCssText: 'box-shadow: 0 8px 24px rgba(23,38,60,.14); border-radius:8px;',
+    textStyle: { color: COLORS.text, fontSize: 13, lineHeight: 20 },
+    extraCssText: 'box-shadow: 0 6px 18px rgba(23,38,60,.12); border-radius:4px;',
   },
 }

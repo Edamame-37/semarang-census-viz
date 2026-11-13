@@ -1,42 +1,40 @@
-import { formatMetricValue } from '../utils/numberFormat.js'
+import { formatMetricValue, formatNumber, formatPercent } from '../utils/numberFormat.js'
+
+export const POPULATION_SHARE_THRESHOLD = 10
+export const COMPARISON_METRICS = Object.freeze(['populationSharePct', 'growthRatePct', 'densityPerKm2'])
 
 export const QUADRANT_LABELS = Object.freeze({
-  A: 'Padat + tumbuh di atas acuan',
-  B: 'Padat di atas, tumbuh tidak di atas acuan',
-  C: 'Tumbuh di atas, kepadatan tidak di atas acuan',
-  D: 'Kepadatan dan pertumbuhan tidak di atas acuan',
+  A: 'Kepadatan dan pertumbuhan di atas acuan',
+  B: 'Kepadatan di atas acuan; pertumbuhan tidak di atas acuan',
+  C: 'Kepadatan tidak di atas acuan; pertumbuhan di atas acuan',
+  D: 'Keduanya tidak di atas acuan',
 })
 
-export const METRIC_CONFIG = Object.freeze({
-  populationSharePct: {
-    label: 'Pangsa penduduk',
-    shortLabel: 'Pangsa (%)',
-    unit: '%',
-    benchmark: 10,
-    benchmarkLabel: 'Ambang eksploratif 10%',
-  },
-  populationThousand: {
-    label: 'Jumlah penduduk',
-    shortLabel: 'Penduduk (ribu)',
-    unit: 'ribu jiwa',
-    benchmark: null,
-    benchmarkLabel: null,
-  },
-  growthRatePct: {
-    label: 'Pertumbuhan penduduk',
-    shortLabel: 'Pertumbuhan',
-    unit: '% per tahun (2020–2023)',
-    benchmark: 0.9,
-    benchmarkLabel: 'Acuan kota 0,90%',
-  },
-  densityPerKm2: {
-    label: 'Kepadatan penduduk',
-    shortLabel: 'Kepadatan',
-    unit: 'jiwa/km²',
-    benchmark: 4534.07,
-    benchmarkLabel: 'Acuan kota 4.534,07',
-  },
-})
+export function createMetricConfig(cityBenchmark) {
+  return {
+    populationSharePct: {
+      label: 'Pangsa penduduk',
+      shortLabel: 'Pangsa penduduk',
+      unit: '%',
+      benchmark: POPULATION_SHARE_THRESHOLD,
+      benchmarkLabel: 'Ambang eksploratif 10%',
+    },
+    growthRatePct: {
+      label: 'Pertumbuhan penduduk',
+      shortLabel: 'Pertumbuhan',
+      unit: '% per tahun (2020–2023)',
+      benchmark: cityBenchmark.growthRatePct,
+      benchmarkLabel: `Acuan kota ${formatPercent(cityBenchmark.growthRatePct)}`,
+    },
+    densityPerKm2: {
+      label: 'Kepadatan penduduk',
+      shortLabel: 'Kepadatan',
+      unit: 'jiwa/km²',
+      benchmark: cityBenchmark.densityPerKm2,
+      benchmarkLabel: `Acuan kota ${formatNumber(cityBenchmark.densityPerKm2)}`,
+    },
+  }
+}
 
 export function sortRecords(records, field, direction = 'desc') {
   const multiplier = direction === 'asc' ? 1 : -1
@@ -58,16 +56,50 @@ export function findSearchMatch(records, query) {
   return records.find(({ districtName }) => districtName.toLocaleLowerCase('id-ID').includes(normalized)) ?? null
 }
 
-export function searchTableRows(records, query) {
+export function getSearchSuggestions(records, query) {
   const normalized = query.trim().toLocaleLowerCase('id-ID')
   if (!normalized) return records
   return records.filter(({ districtName }) => districtName.toLocaleLowerCase('id-ID').includes(normalized))
 }
 
-export function getMetricTooltip(record, metric) {
-  const config = METRIC_CONFIG[metric]
+export function searchTableRows(records, query) {
+  return getSearchSuggestions(records, query)
+}
+
+export function getGrowthExtrema(records) {
+  const maximum = Math.max(...records.map(({ growthRatePct }) => growthRatePct))
+  const minimum = Math.min(...records.map(({ growthRatePct }) => growthRatePct))
+  return {
+    highest: records.filter(({ growthRatePct }) => growthRatePct === maximum),
+    lowest: records.filter(({ growthRatePct }) => growthRatePct === minimum),
+  }
+}
+
+export function getDensitySummary(records) {
+  const sorted = sortRecords(records, 'densityPerKm2')
+  return {
+    highest: sorted[0] ?? null,
+    lowest: sorted.at(-1) ?? null,
+    aboveCityCount: records.filter(({ densityAboveCity }) => densityAboveCity).length,
+  }
+}
+
+export function getKeyFindings(records) {
+  const growth = getGrowthExtrema(records)
+  const groupA = records.filter(({ quadrant }) => quadrant === 'A')
+  return [
+    `${records.filter(({ populationShareAbove10 }) => populationShareAbove10).length} kecamatan memiliki pangsa penduduk di atas ${POPULATION_SHARE_THRESHOLD}%`,
+    `${growth.highest[0]?.districtName} memiliki pertumbuhan tertinggi, ${formatPercent(growth.highest[0]?.growthRatePct ?? 0)}`,
+    `${groupA.map(({ districtName }) => districtName).join(' dan ')} berada pada kelompok A`,
+  ]
+}
+
+export function getMetricTooltip(record, metric, config) {
   const value = record[metric]
-  if (config.benchmark == null) return `${record.districtName}<br/>${config.label}: <strong>${formatMetricValue(metric, value)}</strong> ${metric === 'populationThousand' ? 'ribu jiwa' : ''}`
   const difference = value - config.benchmark
-  return `${record.districtName}<br/>${config.label}: <strong>${formatMetricValue(metric, value)}</strong><br/>Selisih acuan: ${difference > 0 ? '+' : ''}${formatMetricValue(metric, difference)}`
+  const populationContext = metric === 'populationSharePct'
+    ? `<br/>Jumlah penduduk: ${formatNumber(record.populationThousand)} ribu jiwa`
+    : ''
+  const differenceUnit = metric === 'growthRatePct' ? ' poin persentase' : metric === 'densityPerKm2' ? ' jiwa/km²' : ' poin persentase'
+  return `${record.districtName}<br/>${config.label}: <strong>${formatMetricValue(metric, value)}</strong>${populationContext}<br/>Selisih acuan: ${difference > 0 ? '+' : ''}${formatNumber(difference)}${differenceUnit}`
 }

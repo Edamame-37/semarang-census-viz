@@ -9,7 +9,7 @@ export default function Header({ onExport }) {
       </div>
       <nav className="site-header__actions" aria-label="Aksi dashboard">
         <a className="text-action" href="#metodologi">Lihat metodologi</a>
-        <button className="button button--primary" type="button" onClick={onExport}>Unduh data CSV</button>
+        <button className="button button--primary" type="button" onClick={onExport}>Unduh dataset lengkap</button>
       </nav>
     </header>
   )

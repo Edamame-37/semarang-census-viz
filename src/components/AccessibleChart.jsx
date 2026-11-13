@@ -28,8 +28,13 @@ export default function AccessibleChart({ option, ariaLabel, className = '', onS
   }, [onSelect])
 
   useEffect(() => {
-    chartRef.current?.setOption(option, { notMerge: true, lazyUpdate: true })
-  }, [option])
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+    chartRef.current?.setOption({
+      ...option,
+      animation: !reducedMotion,
+      aria: { enabled: true, decal: { show: false }, description: ariaLabel },
+    }, { notMerge: true, lazyUpdate: true })
+  }, [option, ariaLabel])
 
-  return <div ref={containerRef} className={`chart ${className}`} role="img" aria-label={ariaLabel} />
+  return <div ref={containerRef} className={`chart ${className}`} role="img" aria-label={ariaLabel} tabIndex="0" />
 }

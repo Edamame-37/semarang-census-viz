@@ -17,9 +17,24 @@
 .chart-card__actions { flex: 0 0 auto; }
 .chart-index { color: var(--text-muted); letter-spacing: .04em; }
 .compact-field select { min-width: 160px; }
-.chart { width: 100%; min-height: 420px; }
+.chart { width: 100%; min-height: 440px; }
+.chart:focus-visible { outline-offset: 5px; }
 .chart--tall { min-height: 570px; }
-.chart--scatter { min-height: 475px; }
+.chart--scatter { min-height: 600px; }
+.metric-tabs { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: var(--space-3); border-bottom: 1px solid var(--border-strong); }
+.metric-tabs button { min-height: var(--control-height); padding: 7px 14px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--text-muted); font-size: .78rem; font-weight: 680; cursor: pointer; }
+.metric-tabs button[aria-pressed='true'] { border-bottom-color: var(--primary); color: var(--text); }
+.sort-control { display: flex; border: 1px solid var(--border); }
+.sort-control button { min-height: 36px; padding: 6px 10px; border: 0; background: transparent; color: var(--text-muted); font-size: .72rem; font-weight: 680; cursor: pointer; }
+.sort-control button + button { border-left: 1px solid var(--border); }
+.sort-control button[aria-pressed='true'] { background: var(--text); color: #fff; }
+.chart-reference { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); color: var(--text-muted); font-size: .72rem; }
+.chart-reference--split { flex-wrap: wrap; gap: var(--space-3) var(--space-5); }
+.chart-reference--split span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.reference-line { display: inline-block; width: 24px; height: 0; border-top: 2px dashed var(--benchmark); }
+.reference-line--solid { border-top-style: solid; }
+.chart-facts { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin-bottom: var(--space-2); color: var(--text-muted); font-size: .72rem; }
+.chart-facts strong { color: var(--text); }
 .chart-footnote {
   margin: 10px 0 0;
   padding: 10px 0 0;
@@ -88,8 +103,14 @@ tbody tr:last-child td { border-bottom: 0; }
   .chart-card { padding-bottom: 24px; }
   .chart-card__header { min-height: 0; padding-inline: 0; flex-direction: column; }
   .chart-card__actions, .compact-field, .compact-field select { width: 100%; }
+  .sort-control { width: max-content; }
+  .metric-tabs { display: grid; grid-template-columns: 1fr; border: 1px solid var(--border); }
+  .metric-tabs button { text-align: left; border-bottom: 1px solid var(--border); }
+  .metric-tabs button:last-child { border-bottom: 0; }
+  .metric-tabs button[aria-pressed='true'] { border-left: 4px solid var(--primary); border-bottom-color: var(--border); background: var(--surface-muted); }
   .chart { min-height: 400px; }
   .chart--tall { min-height: 560px; }
+  .chart--scatter { min-height: 520px; }
   .quadrant-chips { grid-template-columns: repeat(2, 1fr); }
   .quadrant-legend { grid-template-columns: 1fr; }
   .table-scroll-hint { display: block; }

@@ -6,6 +6,7 @@ const INITIAL_STATE = Object.freeze({
   selectedDistrictId: null,
   selectedQuadrant: 'ALL',
   metric: 'populationSharePct',
+  chartSortDirection: 'desc',
   tableSort: { field: 'districtName', direction: 'asc' },
 })
 
@@ -30,7 +31,9 @@ export function useDashboardState(districts) {
   const selectDistrict = useCallback((districtId) => {
     setState((current) => ({ ...current, selectedDistrictId: current.selectedDistrictId === districtId ? null : districtId }))
   }, [])
+  const clearSearch = useCallback(() => setState((current) => ({ ...current, searchQuery: '' })), [])
+  const clearSelection = useCallback(() => setState((current) => ({ ...current, selectedDistrictId: null })), [])
   const reset = useCallback(() => setState(INITIAL_STATE), [])
 
-  return { state, filteredDistricts, tableRows, searchMatch, selectedDistrict, update, selectDistrict, reset }
+  return { state, filteredDistricts, tableRows, searchMatch, selectedDistrict, update, selectDistrict, clearSearch, clearSelection, reset }
 }
