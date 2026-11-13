@@ -1,0 +1,402 @@
+{
+  "title": "Kota Semarang Dalam Angka 2024",
+  "table": "Tabel 3.1.1",
+  "publisher": "BPS Kota Semarang",
+  "observationYear": 2023,
+  "growthPeriod": "2020–2023",
+  "sourceUrl": "https://semarangkota.bps.go.id/id/publication/2024/02/28/a1c4e17788918ee0a85fe480/k",
+  "preparedAt": "2026-11-12T17:56:10.039Z",
+  "input": {
+    "filename": "Penduduk, Laju Pertumbuhan Penduduk, Distribusi Persentase Penduduk Kepadatan Penduduk, Rasio Jenis Kelamin Penduduk Menurut Kecamatan di Kota Semarang, 2023 (1).csv",
+    "encoding": "UTF-8 BOM",
+    "delimiter": ",",
+    "checksumSha256": "C4D0990293176FE13F8C07E8A72E617C3667F9C20B62D71969941A7524153A50",
+    "rows": 17
+  },
+  "canonicalDecision": "Nilai tampilan mengikuti oracle §2.7 karena CSV lokal memiliki pembulatan kasar dan perbedaan material pada laju pertumbuhan. CSV asli dipertahankan read-only.",
+  "units": {
+    "populationThousand": "ribu jiwa",
+    "populationSharePct": "persen",
+    "growthRatePct": "persen per tahun, 2020–2023",
+    "densityPerKm2": "jiwa per km²",
+    "sexRatioPer100Females": "laki-laki per 100 perempuan"
+  },
+  "geometry": {
+    "status": "not-available",
+    "reason": "Tidak ditemukan GeoJSON/SHP pada dataset/; fallback ranked density bar digunakan."
+  },
+  "discrepancies": [
+    {
+      "districtName": "Mijen",
+      "field": "populationThousand",
+      "localValue": 89.9,
+      "oracleValue": 89.95
+    },
+    {
+      "districtName": "Mijen",
+      "field": "growthRatePct",
+      "localValue": 3.63,
+      "oracleValue": 3.93
+    },
+    {
+      "districtName": "Mijen",
+      "field": "densityPerKm2",
+      "localValue": 1591,
+      "oracleValue": 1591.35
+    },
+    {
+      "districtName": "Mijen",
+      "field": "sexRatioPer100Females",
+      "localValue": 99.6,
+      "oracleValue": 99.57
+    },
+    {
+      "districtName": "Gunungpati",
+      "field": "populationThousand",
+      "localValue": 100.8,
+      "oracleValue": 100.75
+    },
+    {
+      "districtName": "Gunungpati",
+      "field": "growthRatePct",
+      "localValue": 0.95,
+      "oracleValue": 1
+    },
+    {
+      "districtName": "Gunungpati",
+      "field": "sexRatioPer100Females",
+      "localValue": 99.7,
+      "oracleValue": 99.74
+    },
+    {
+      "districtName": "Banyumanik",
+      "field": "populationThousand",
+      "localValue": 143.4,
+      "oracleValue": 143.43
+    },
+    {
+      "districtName": "Banyumanik",
+      "field": "densityPerKm2",
+      "localValue": 4823,
+      "oracleValue": 4822.53
+    },
+    {
+      "districtName": "Banyumanik",
+      "field": "sexRatioPer100Females",
+      "localValue": 97.1,
+      "oracleValue": 97.14
+    },
+    {
+      "districtName": "Gajah Mungkur",
+      "field": "populationThousand",
+      "localValue": 56.4,
+      "oracleValue": 56.35
+    },
+    {
+      "districtName": "Gajah Mungkur",
+      "field": "growthRatePct",
+      "localValue": 0.1,
+      "oracleValue": 0.08
+    },
+    {
+      "districtName": "Gajah Mungkur",
+      "field": "densityPerKm2",
+      "localValue": 6031,
+      "oracleValue": 6030.73
+    },
+    {
+      "districtName": "Gajah Mungkur",
+      "field": "sexRatioPer100Females",
+      "localValue": 96,
+      "oracleValue": 96.01
+    },
+    {
+      "districtName": "Semarang Selatan",
+      "field": "populationThousand",
+      "localValue": 62.2,
+      "oracleValue": 62.18
+    },
+    {
+      "districtName": "Semarang Selatan",
+      "field": "growthRatePct",
+      "localValue": 0.11,
+      "oracleValue": 0.09
+    },
+    {
+      "districtName": "Semarang Selatan",
+      "field": "densityPerKm2",
+      "localValue": 10457,
+      "oracleValue": 10456.73
+    },
+    {
+      "districtName": "Semarang Selatan",
+      "field": "sexRatioPer100Females",
+      "localValue": 94.5,
+      "oracleValue": 94.53
+    },
+    {
+      "districtName": "Candisari",
+      "field": "populationThousand",
+      "localValue": 75.6,
+      "oracleValue": 75.61
+    },
+    {
+      "districtName": "Candisari",
+      "field": "growthRatePct",
+      "localValue": 0.1,
+      "oracleValue": 0.08
+    },
+    {
+      "districtName": "Candisari",
+      "field": "densityPerKm2",
+      "localValue": 11820,
+      "oracleValue": 11820.08
+    },
+    {
+      "districtName": "Candisari",
+      "field": "sexRatioPer100Females",
+      "localValue": 97.4,
+      "oracleValue": 97.36
+    },
+    {
+      "districtName": "Tembalang",
+      "field": "populationThousand",
+      "localValue": 198.9,
+      "oracleValue": 198.86
+    },
+    {
+      "districtName": "Tembalang",
+      "field": "growthRatePct",
+      "localValue": 1.62,
+      "oracleValue": 1.73
+    },
+    {
+      "districtName": "Tembalang",
+      "field": "densityPerKm2",
+      "localValue": 5038,
+      "oracleValue": 5038.38
+    },
+    {
+      "districtName": "Pedurungan",
+      "field": "populationThousand",
+      "localValue": 196.5,
+      "oracleValue": 196.53
+    },
+    {
+      "districtName": "Pedurungan",
+      "field": "growthRatePct",
+      "localValue": 0.61,
+      "oracleValue": 0.63
+    },
+    {
+      "districtName": "Pedurungan",
+      "field": "densityPerKm2",
+      "localValue": 9310,
+      "oracleValue": 9309.77
+    },
+    {
+      "districtName": "Pedurungan",
+      "field": "sexRatioPer100Females",
+      "localValue": 97.8,
+      "oracleValue": 97.79
+    },
+    {
+      "districtName": "Genuk",
+      "field": "populationThousand",
+      "localValue": 132.5,
+      "oracleValue": 132.47
+    },
+    {
+      "districtName": "Genuk",
+      "field": "growthRatePct",
+      "localValue": 2.45,
+      "oracleValue": 2.64
+    },
+    {
+      "districtName": "Genuk",
+      "field": "densityPerKm2",
+      "localValue": 5099,
+      "oracleValue": 5099.22
+    },
+    {
+      "districtName": "Genuk",
+      "field": "sexRatioPer100Females",
+      "localValue": 102.2,
+      "oracleValue": 102.17
+    },
+    {
+      "districtName": "Gayamsari",
+      "field": "populationThousand",
+      "localValue": 70.4,
+      "oracleValue": 70.41
+    },
+    {
+      "districtName": "Gayamsari",
+      "field": "growthRatePct",
+      "localValue": 0.11,
+      "oracleValue": 0.08
+    },
+    {
+      "districtName": "Gayamsari",
+      "field": "densityPerKm2",
+      "localValue": 11320,
+      "oracleValue": 11319.94
+    },
+    {
+      "districtName": "Gayamsari",
+      "field": "sexRatioPer100Females",
+      "localValue": 98.8,
+      "oracleValue": 98.83
+    },
+    {
+      "districtName": "Semarang Timur",
+      "field": "populationThousand",
+      "localValue": 66.5,
+      "oracleValue": 66.48
+    },
+    {
+      "districtName": "Semarang Timur",
+      "field": "growthRatePct",
+      "localValue": 0.12,
+      "oracleValue": 0.1
+    },
+    {
+      "districtName": "Semarang Timur",
+      "field": "densityPerKm2",
+      "localValue": 12262,
+      "oracleValue": 12261.64
+    },
+    {
+      "districtName": "Semarang Timur",
+      "field": "sexRatioPer100Females",
+      "localValue": 94.3,
+      "oracleValue": 94.28
+    },
+    {
+      "districtName": "Semarang Utara",
+      "field": "populationThousand",
+      "localValue": 117.9,
+      "oracleValue": 117.89
+    },
+    {
+      "districtName": "Semarang Utara",
+      "field": "growthRatePct",
+      "localValue": 0.11,
+      "oracleValue": 0.09
+    },
+    {
+      "districtName": "Semarang Utara",
+      "field": "densityPerKm2",
+      "localValue": 10348,
+      "oracleValue": 10347.6
+    },
+    {
+      "districtName": "Semarang Utara",
+      "field": "sexRatioPer100Females",
+      "localValue": 97.5,
+      "oracleValue": 97.49
+    },
+    {
+      "districtName": "Semarang Tengah",
+      "field": "populationThousand",
+      "localValue": 55.2,
+      "oracleValue": 55.21
+    },
+    {
+      "districtName": "Semarang Tengah",
+      "field": "growthRatePct",
+      "localValue": 0.13,
+      "oracleValue": 0.1
+    },
+    {
+      "districtName": "Semarang Tengah",
+      "field": "densityPerKm2",
+      "localValue": 10672,
+      "oracleValue": 10672.11
+    },
+    {
+      "districtName": "Semarang Tengah",
+      "field": "sexRatioPer100Females",
+      "localValue": 91.9,
+      "oracleValue": 91.88
+    },
+    {
+      "districtName": "Semarang Barat",
+      "field": "populationThousand",
+      "localValue": 149.3,
+      "oracleValue": 149.33
+    },
+    {
+      "districtName": "Semarang Barat",
+      "field": "growthRatePct",
+      "localValue": 0.13,
+      "oracleValue": 0.11
+    },
+    {
+      "districtName": "Semarang Barat",
+      "field": "densityPerKm2",
+      "localValue": 6889,
+      "oracleValue": 6888.81
+    },
+    {
+      "districtName": "Semarang Barat",
+      "field": "sexRatioPer100Females",
+      "localValue": 96.4,
+      "oracleValue": 96.44
+    },
+    {
+      "districtName": "Tugu",
+      "field": "growthRatePct",
+      "localValue": 1.01,
+      "oracleValue": 1.07
+    },
+    {
+      "districtName": "Tugu",
+      "field": "densityPerKm2",
+      "localValue": 1202,
+      "oracleValue": 1201.59
+    },
+    {
+      "districtName": "Ngaliyan",
+      "field": "growthRatePct",
+      "localValue": 0.91,
+      "oracleValue": 0.96
+    },
+    {
+      "districtName": "Ngaliyan",
+      "field": "densityPerKm2",
+      "localValue": 3385,
+      "oracleValue": 3384.58
+    },
+    {
+      "districtName": "Ngaliyan",
+      "field": "sexRatioPer100Females",
+      "localValue": 99.1,
+      "oracleValue": 99.06
+    },
+    {
+      "districtName": "Kota Semarang",
+      "field": "populationThousand",
+      "localValue": 1694.7,
+      "oracleValue": 1694.74
+    },
+    {
+      "districtName": "Kota Semarang",
+      "field": "growthRatePct",
+      "localValue": 0.87,
+      "oracleValue": 0.9
+    },
+    {
+      "districtName": "Kota Semarang",
+      "field": "densityPerKm2",
+      "localValue": 4534,
+      "oracleValue": 4534.07
+    },
+    {
+      "districtName": "Kota Semarang",
+      "field": "sexRatioPer100Females",
+      "localValue": 97.9,
+      "oracleValue": 97.91
+    }
+  ]
+}
