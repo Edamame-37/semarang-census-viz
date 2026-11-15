@@ -1,7 +1,7 @@
 export default function MethodologyPanel({ provenance }) {
   return (
     <section className="methodology" id="metodologi" aria-labelledby="methodology-title">
-      <div className="section-heading"><div><p className="section-index">04 / Catatan pembacaan</p><h2 id="methodology-title">Metodologi &amp; keterbatasan</h2></div><p className="scope-note">Ambang analitis, bukan standar kebijakan resmi.</p></div>
+      <div className="section-heading"><div><p className="section-index">05 / Catatan pembacaan</p><h2 id="methodology-title">Metodologi &amp; keterbatasan</h2></div><p className="scope-note">Ambang analitis, bukan standar kebijakan resmi.</p></div>
       <div className="methodology-grid">
         <article><h3>Indikator dan benchmark</h3><p>Penduduk memakai ribu jiwa, pangsa memakai poin persen, dan kepadatan memakai jiwa/km². Benchmark kota adalah agregat resmi BPS, bukan rerata sederhana 16 kecamatan.</p></article>
         <article><h3>Rasio jenis kelamin</h3><p>Rasio menyatakan jumlah laki-laki per 100 perempuan. Titik 100 dipakai sebagai baseline deviasi; nilai ini bukan persentase laki-laki atau ukuran langsung ketimpangan sosial.</p></article>

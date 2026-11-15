@@ -13,8 +13,8 @@ export default function ExecutiveScorecards({ benchmark, districts }) {
   return (
     <section className="overview" aria-labelledby="overview-title">
       <div className="section-heading">
-        <div><p className="section-index">01 / Ikhtisar kota</p><h2 id="overview-title">Semarang dalam empat angka</h2></div>
-        <p className="scope-note">Benchmark resmi Kota Semarang—tetap saat data disaring.</p>
+        <div><p className="section-index">01 / Zona atas · Executive scorecards</p><h2 id="overview-title">Semarang dalam empat angka</h2></div>
+        <p className="scope-note">Jawaban instan di bawah 3 detik—benchmark resmi kota, tetap saat data disaring.</p>
       </div>
       <div className="stat-strip">
         {cards.map((card) => (

@@ -5,7 +5,7 @@ test('answers core CBQs and links table selection', async ({ page }, testInfo) =
   const consoleErrors = []
   page.on('console', (message) => message.type() === 'error' && consoleErrors.push(message.text()))
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Dashboard Demografi/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Demografi dan rasio jenis kelamin di kota Semarang/ })).toBeVisible()
   await page.screenshot({ path: `docs/dashboard-${testInfo.project.name.startsWith('mobile') ? 'mobile' : 'desktop'}.png`, fullPage: true })
   await expect(page.getByText('1.694,74')).toBeVisible()
   await page.getByRole('button', { name: 'Mijen', exact: true }).click()
