@@ -10,6 +10,7 @@ import ExecutiveScorecards from './components/ExecutiveScorecards.jsx'
 import Header from './components/Header.jsx'
 import MethodologyPanel from './components/MethodologyPanel.jsx'
 import SexRatioDivergingChart from './components/SexRatioDivergingChart.jsx'
+import VisualEncodingGuide from './components/VisualEncodingGuide.jsx'
 import { dashboardData } from './data/loader.js'
 import { exportCompleteDataset } from './utils/export.js'
 
@@ -41,8 +42,8 @@ function App() {
 
         <section className="dashboard-zone" aria-labelledby="zone-two-title">
           <div className="section-heading">
-            <div><p className="section-index">02 / Analisis inti</p><h2 id="zone-two-title">Pola kepadatan dan pertumbuhan</h2></div>
-            <p className="section-heading__note">Klik elemen data untuk menghubungkan sorotan antargrafik.</p>
+            <div><p className="section-index">02 / Zona tengah · Analisis utama</p><h2 id="zone-two-title">Pola kepadatan dan pertumbuhan</h2></div>
+            <p className="section-heading__note">Scatterplot dan ranked bar menjadi analisis utama; klik elemen data untuk menyorot.</p>
           </div>
           <div className="analysis-grid analysis-grid--main">
             <DensityGrowthQuadrantChart districts={dashboard.filteredDistricts} allDistricts={districts} benchmark={cityBenchmark} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} selectedQuadrant={dashboard.state.selectedQuadrant} onSelect={dashboard.selectDistrict} onQuadrantChange={(selectedQuadrant) => dashboard.update({ selectedQuadrant })} />
@@ -52,7 +53,7 @@ function App() {
 
         <section className="dashboard-zone" aria-labelledby="zone-three-title">
           <div className="section-heading">
-            <div><p className="section-index">03 / Perbandingan rinci</p><h2 id="zone-three-title">Bandingkan seluruh indikator</h2></div>
+            <div><p className="section-index">03 / Zona bawah &amp; samping · Rincian dan komparasi</p><h2 id="zone-three-title">Bandingkan seluruh indikator</h2></div>
             <p className="section-heading__note">Panjang dan posisi adalah encoding utama; warna hanya memperkuat kategori.</p>
           </div>
           <DistrictDetailPanel district={dashboard.selectedDistrict} benchmark={cityBenchmark} onClose={dashboard.clearSelection} />
@@ -63,6 +64,7 @@ function App() {
           <DistrictTable rows={dashboard.tableRows} selectedDistrictId={dashboard.state.selectedDistrictId} tableSort={dashboard.state.tableSort} onSort={(tableSort) => dashboard.update({ tableSort })} onSelect={dashboard.selectDistrict} onReset={dashboard.reset} />
         </section>
 
+        <VisualEncodingGuide />
         <MethodologyPanel provenance={provenance} />
       </main>
       <footer className="site-footer">
