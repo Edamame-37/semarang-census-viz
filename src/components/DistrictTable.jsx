@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { formatNumber, formatPercent } from '../utils/numberFormat.js'
 import { exportFilteredDistricts } from '../utils/export.js'
-import ChartCard from './ChartCard.jsx'
 
 const COLUMNS = [
   ['districtName', 'Kecamatan'],
@@ -9,7 +8,7 @@ const COLUMNS = [
   ['populationSharePct', 'Pangsa (%)'],
   ['growthRatePct', 'Pertumbuhan (%/thn)'],
   ['densityPerKm2', 'Kepadatan (jiwa/km²)'],
-  ['sexRatioPer100Females', 'Rasio JK (L/100 P)'],
+  ['sexRatioPer100Females', 'Rasio JK'],
   ['quadrant', 'Grup'],
 ]
 
@@ -31,24 +30,29 @@ export default function DistrictTable({ rows, selectedDistrictId, tableSort, onS
   const getAriaSort = (field) => tableSort.field === field ? (tableSort.direction === 'asc' ? 'ascending' : 'descending') : 'none'
 
   return (
-    <ChartCard id="table" className="table-card" eyebrow="Nilai presisi & alternatif aksesibel" title="Tabel 16 kecamatan" description={`Menampilkan ${rows.length} dari 16 kecamatan.`} actions={<button className="button button--secondary" type="button" onClick={() => exportFilteredDistricts(rows)}>Ekspor hasil filter ({rows.length})</button>}>
-      {rows.length ? (
-        <>
-          <p className="table-scroll-hint">Geser tabel ke samping untuk melihat seluruh indikator.</p>
-          <div className="table-scroll" tabIndex="0" aria-label="Tabel dapat digulir horizontal pada layar kecil">
-            <table>
-              <thead><tr>{COLUMNS.map(([field, label]) => <th scope="col" aria-sort={getAriaSort(field)} key={field}><button type="button" onClick={() => toggleSort(field)}>{label}<span aria-hidden="true">{tableSort.field === field ? (tableSort.direction === 'asc' ? ' ↑' : ' ↓') : ' ↕'}</span></button></th>)}</tr></thead>
+    <div className="pbi-tile pbi-tile--table">
+      <div className="pbi-tile__head">
+        <h2 className="pbi-tile__title">Data 16 Kecamatan</h2>
+        <div className="pbi-tile__actions">
+          <button className="pbi-export-btn" type="button" onClick={() => exportFilteredDistricts(rows)}>Export ({rows.length})</button>
+        </div>
+      </div>
+      <div className="pbi-tile__body">
+        {rows.length ? (
+          <div className="pbi-table-scroll" tabIndex="0">
+            <table className="pbi-table">
+              <thead><tr>{COLUMNS.map(([field, label]) => <th scope="col" aria-sort={getAriaSort(field)} key={field}><button type="button" onClick={() => toggleSort(field)}>{label}{tableSort.field === field ? (tableSort.direction === 'asc' ? ' ↑' : ' ↓') : ' ↕'}</button></th>)}</tr></thead>
               <tbody>
                 {sortedRows.map((record) => (
                   <tr key={record.districtId} className={record.districtId === selectedDistrictId ? 'is-selected' : ''}>
-                    {COLUMNS.map(([field, label]) => <td key={field} data-label={label}>{field === 'districtName' ? <button type="button" className="table-row-button" onClick={() => onSelect(record.districtId)} aria-pressed={record.districtId === selectedDistrictId}>{record.districtName}</button> : field === 'quadrant' ? <span className={`group-badge group-badge--${record.quadrant}`} aria-label={`Kelompok ${record.quadrant}`}>{record.quadrant}</span> : formatCell(record, field)}</td>)}
+                    {COLUMNS.map(([field, label]) => <td key={field} data-label={label}>{field === 'districtName' ? <button type="button" className="pbi-table-name-btn" onClick={() => onSelect(record.districtId)} aria-pressed={record.districtId === selectedDistrictId}>{record.districtName}</button> : field === 'quadrant' ? <span className={`pbi-group-badge pbi-group-badge--${record.quadrant}`}>{record.quadrant}</span> : formatCell(record, field)}</td>)}
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </>
-      ) : <div className="empty-state"><p>Tidak ada kecamatan yang cocok dengan filter atau pencarian.</p><button className="button button--secondary" type="button" onClick={onReset}>Reset filter</button></div>}
-    </ChartCard>
+        ) : <div className="pbi-empty"><button className="pbi-reset-btn" type="button" onClick={onReset}>Reset</button></div>}
+      </div>
+    </div>
   )
 }

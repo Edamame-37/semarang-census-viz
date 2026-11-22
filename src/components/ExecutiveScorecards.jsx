@@ -1,34 +1,28 @@
 import { formatNumber, formatPercent } from '../utils/numberFormat.js'
-import { getKeyFindings } from '../data/selectors.js'
 
-export default function ExecutiveScorecards({ benchmark, districts }) {
-  const insights = getKeyFindings(districts)
+export default function ExecutiveScorecards({ benchmark }) {
   const cards = [
-    { label: 'Penduduk kota', value: formatNumber(benchmark.populationThousand), unit: 'ribu jiwa', note: 'Agregat resmi BPS 2023' },
-    { label: 'Kepadatan kota', value: formatNumber(benchmark.densityPerKm2), unit: 'jiwa/km²', note: 'Acuan 16 kecamatan' },
-    { label: 'Pertumbuhan', value: formatPercent(benchmark.growthRatePct), unit: 'per tahun', note: 'Rata-rata 2020–2023' },
-    { label: 'Rasio jenis kelamin', value: formatNumber(benchmark.sexRatioPer100Females), unit: 'L / 100 P', note: 'Agregat kota 2023' },
+    { label: 'Total Penduduk', value: formatNumber(benchmark.populationThousand), unit: 'ribu jiwa', color: '#0078D4' },
+    { label: 'Kepadatan Kota', value: formatNumber(benchmark.densityPerKm2), unit: 'jiwa/km²', color: '#1F4E79' },
+    { label: 'Pertumbuhan', value: formatPercent(benchmark.growthRatePct), unit: 'per tahun', color: '#D97706' },
+    { label: 'Rasio Jenis Kelamin', value: formatNumber(benchmark.sexRatioPer100Females), unit: 'L / 100 P', color: '#7C3AED' },
   ]
 
   return (
-    <section className="overview" aria-labelledby="overview-title">
-      <div className="section-heading">
-        <div><p className="section-index">01 / Zona atas · Executive scorecards</p><h2 id="overview-title">Semarang dalam empat angka</h2></div>
-        <p className="scope-note">Jawaban instan di bawah 3 detik—benchmark resmi kota, tetap saat data disaring.</p>
-      </div>
-      <div className="stat-strip">
-        {cards.map((card) => (
-          <article className="stat-item" key={card.label}>
-            <p className="stat-item__label">{card.label}</p>
-            <p className="stat-item__measure"><strong>{card.value}</strong><span>{card.unit}</span></p>
-            <p className="stat-item__note">{card.note}</p>
-          </article>
-        ))}
-      </div>
-      <div className="insight-summary" aria-label="Temuan terverifikasi seluruh kota">
-        <span>Temuan utama</span>
-        {insights.map((insight, index) => <p key={insight}><strong>{index + 1}.</strong> {insight}</p>)}
-      </div>
-    </section>
+    <>
+      {cards.map((card) => (
+        <div className="pbi-tile pbi-tile--kpi" key={card.label}>
+          <div className="pbi-tile__head">
+            <h2 className="pbi-tile__title">{card.label}</h2>
+          </div>
+          <div className="pbi-tile__body">
+            <div className="pbi-kpi">
+              <p className="pbi-kpi__value" style={{ color: card.color }}>{card.value}</p>
+              <p className="pbi-kpi__unit">{card.unit}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
   )
 }

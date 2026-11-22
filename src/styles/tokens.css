@@ -1,34 +1,42 @@
 :root {
-  --bg: #f7f8f9;
-  --surface: #ffffff;
-  --surface-muted: #eef1f3;
-  --text: #18232e;
-  --text-muted: #5b6875;
-  --border: #ccd3d9;
-  --border-strong: #8996a3;
-  --primary: #16527d;
-  --primary-hover: #0e3e61;
-  --primary-soft: #e6eef4;
-  --benchmark: #4f5e6b;
-  --group-a: #9b4e1c;
-  --group-b: #285d8d;
-  --group-c: #146f67;
-  --group-d: #68737e;
-  --focus: #0869b7;
-  --danger: #9d3434;
-  --radius-card: 6px;
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-  --text-xs: .75rem;
-  --text-sm: .875rem;
-  --text-md: 1rem;
-  --text-lg: 1.125rem;
-  --control-height: 42px;
+  --pbi-bg: #F4F6F9;
+  --pbi-canvas: #E9ECEF;
+  --pbi-card: #FFFFFF;
+  --pbi-header: #1E293B;
+  --pbi-header-text: #FFFFFF;
+  --pbi-nav: #0F172A;
+  --pbi-nav-hover: #334155;
+  
+  /* Primary & Accents */
+  --pbi-accent: #0078D4;
+  --pbi-accent-dark: #106EBE;
+  --pbi-accent-light: #EBF3FC;
+  --pbi-selected: #FFB900;
+  
+  /* Typography */
+  --pbi-text: #1E293B;
+  --pbi-text-secondary: #475569;
+  --pbi-text-muted: #94A3B8;
+  
+  /* Borders & Shadows */
+  --pbi-border: #E2E8F0;
+  --pbi-border-strong: #CBD5E1;
+  --pbi-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --pbi-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  
+  /* Quadrant / Demographic Colors */
+  --pbi-group-a: #0E7C7B; /* Emerald Teal - High Growth & High Density (Sentra Akselerasi) */
+  --pbi-group-b: #1F4E79; /* Royal Navy - High Density, Stable (Urban Core Mapan) */
+  --pbi-group-c: #D97706; /* Warm Amber - High Growth, Low Density (Suburban Booming) */
+  --pbi-group-d: #64748B; /* Cool Slate - Static/Low */
+  
+  /* Indicator Accents */
+  --pbi-benchmark: #DC2626; /* Crimson Red for target/benchmark line */
+  --pbi-female-surplus: #7C3AED; /* Royal Purple */
+  --pbi-male-surplus: #0284C7; /* Sky Blue */
+  
+  --pbi-radius: 6px;
+  --pbi-font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --pbi-header-height: 48px;
+  --pbi-tabbar-height: 36px;
 }

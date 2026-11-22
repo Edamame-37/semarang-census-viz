@@ -4,22 +4,16 @@ import ComparisonBarChart from './components/ComparisonBarChart.jsx'
 import DashboardFilters from './components/DashboardFilters.jsx'
 import DensityBarChart from './components/DensityBarChart.jsx'
 import DensityGrowthQuadrantChart from './components/DensityGrowthQuadrantChart.jsx'
-import DistrictDetailPanel from './components/DistrictDetailPanel.jsx'
 import DistrictTable from './components/DistrictTable.jsx'
 import ExecutiveScorecards from './components/ExecutiveScorecards.jsx'
-import Header from './components/Header.jsx'
-import MethodologyPanel from './components/MethodologyPanel.jsx'
 import SexRatioDivergingChart from './components/SexRatioDivergingChart.jsx'
-import VisualEncodingGuide from './components/VisualEncodingGuide.jsx'
 import { dashboardData } from './data/loader.js'
 import { exportCompleteDataset } from './utils/export.js'
 
 function DataError({ errors }) {
   return (
     <main className="data-error" role="alert">
-      <p className="eyebrow">Validasi gagal</p>
       <h1>Data tidak dapat ditampilkan</h1>
-      <p>Dataset tidak memenuhi kontrak dashboard. Tidak ada grafik yang dirender agar nilai invalid tidak terlihat sebagai nol.</p>
       <ul>{errors.map((error) => <li key={error}>{error}</li>)}</ul>
     </main>
   )
@@ -29,48 +23,102 @@ function App() {
   const dashboard = useDashboardState(dashboardData.districts)
   if (dashboardData.status === 'error') return <DataError errors={dashboardData.errors} />
 
-  const { districts, cityBenchmark, provenance } = dashboardData
+  const { districts, cityBenchmark } = dashboardData
   const highlightDistrictId = dashboard.searchMatch?.districtId ?? null
 
   return (
-    <div className="app-shell" id="top">
+    <div className="pbi-shell">
       <a className="skip-link" href="#main-content">Lewati ke konten utama</a>
-      <Header onExport={() => exportCompleteDataset(districts)} />
-      <main id="main-content">
-        <ExecutiveScorecards benchmark={cityBenchmark} districts={districts} />
-        <DashboardFilters state={dashboard.state} districts={districts} visibleCount={dashboard.tableRows.length} searchMatch={dashboard.searchMatch} onChange={dashboard.update} onClearSearch={dashboard.clearSearch} onReset={dashboard.reset} />
 
-        <section className="dashboard-zone" aria-labelledby="zone-two-title">
-          <div className="section-heading">
-            <div><p className="section-index">02 / Zona tengah · Analisis utama</p><h2 id="zone-two-title">Pola kepadatan dan pertumbuhan</h2></div>
-            <p className="section-heading__note">Scatterplot dan ranked bar menjadi analisis utama; klik elemen data untuk menyorot.</p>
-          </div>
-          <div className="analysis-grid analysis-grid--main">
-            <DensityGrowthQuadrantChart districts={dashboard.filteredDistricts} allDistricts={districts} benchmark={cityBenchmark} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} selectedQuadrant={dashboard.state.selectedQuadrant} onSelect={dashboard.selectDistrict} onQuadrantChange={(selectedQuadrant) => dashboard.update({ selectedQuadrant })} />
-            <DensityBarChart districts={dashboard.filteredDistricts} allDistricts={districts} benchmark={cityBenchmark} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
-          </div>
-        </section>
+      {/* Power BI Header */}
+      <header className="pbi-header">
+        <div className="pbi-header__logo">
+          <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="8" width="4" height="10" rx="1" fill="#F2C811"/><rect x="8" y="4" width="4" height="14" rx="1" fill="#F2C811"/><rect x="14" y="1" width="4" height="17" rx="1" fill="#F2C811"/></svg>
+          Dashboard
+        </div>
+        <div className="pbi-header__sep" />
+        <h1 className="pbi-header__title">Demografi Kota Semarang 2023</h1>
+        <div className="pbi-header__actions">
+          <button className="pbi-header__btn" type="button" onClick={() => exportCompleteDataset(districts)}>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 10.5L3.5 6H6V1h4v5h2.5L8 10.5zM2 13v2h12v-2H2z"/></svg>
+            Export Dataset
+          </button>
+        </div>
+      </header>
 
-        <section className="dashboard-zone" aria-labelledby="zone-three-title">
-          <div className="section-heading">
-            <div><p className="section-index">03 / Zona bawah &amp; samping · Rincian dan komparasi</p><h2 id="zone-three-title">Bandingkan seluruh indikator</h2></div>
-            <p className="section-heading__note">Panjang dan posisi adalah encoding utama; warna hanya memperkuat kategori.</p>
-          </div>
-          <DistrictDetailPanel district={dashboard.selectedDistrict} benchmark={cityBenchmark} onClose={dashboard.clearSelection} />
-          <div className="analysis-grid analysis-grid--split">
-            <ComparisonBarChart districts={dashboard.filteredDistricts} benchmark={cityBenchmark} metric={dashboard.state.metric} sortDirection={dashboard.state.chartSortDirection} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onMetricChange={(metric) => dashboard.update({ metric })} onSortChange={(chartSortDirection) => dashboard.update({ chartSortDirection })} onSelect={dashboard.selectDistrict} />
-            <SexRatioDivergingChart districts={dashboard.filteredDistricts} selectedDistrictId={dashboard.state.selectedDistrictId} highlightDistrictId={highlightDistrictId} onSelect={dashboard.selectDistrict} />
-          </div>
-          <DistrictTable rows={dashboard.tableRows} selectedDistrictId={dashboard.state.selectedDistrictId} tableSort={dashboard.state.tableSort} onSort={(tableSort) => dashboard.update({ tableSort })} onSelect={dashboard.selectDistrict} onReset={dashboard.reset} />
-        </section>
+      {/* Canvas */}
+      <main className="pbi-canvas" id="main-content">
+        <div className="pbi-canvas__inner">
 
-        <VisualEncodingGuide />
-        <MethodologyPanel provenance={provenance} />
+          {/* KPI Cards */}
+          <ExecutiveScorecards benchmark={cityBenchmark} />
+
+          {/* Filter Slicer */}
+          <DashboardFilters
+            state={dashboard.state}
+            districts={districts}
+            onChange={dashboard.update}
+            onClearSearch={dashboard.clearSearch}
+            onReset={dashboard.reset}
+          />
+
+          {/* Visualizations 2x2 Grid */}
+          <DensityGrowthQuadrantChart
+            districts={dashboard.filteredDistricts}
+            allDistricts={districts}
+            benchmark={cityBenchmark}
+            selectedDistrictId={dashboard.state.selectedDistrictId}
+            highlightDistrictId={highlightDistrictId}
+            selectedQuadrant={dashboard.state.selectedQuadrant}
+            onSelect={dashboard.selectDistrict}
+            onQuadrantChange={(selectedQuadrant) => dashboard.update({ selectedQuadrant })}
+          />
+
+          <DensityBarChart
+            districts={dashboard.filteredDistricts}
+            allDistricts={districts}
+            benchmark={cityBenchmark}
+            selectedDistrictId={dashboard.state.selectedDistrictId}
+            highlightDistrictId={highlightDistrictId}
+            onSelect={dashboard.selectDistrict}
+          />
+
+          <ComparisonBarChart
+            districts={dashboard.filteredDistricts}
+            benchmark={cityBenchmark}
+            metric={dashboard.state.metric}
+            sortDirection={dashboard.state.chartSortDirection}
+            selectedDistrictId={dashboard.state.selectedDistrictId}
+            highlightDistrictId={highlightDistrictId}
+            onMetricChange={(metric) => dashboard.update({ metric })}
+            onSortChange={(chartSortDirection) => dashboard.update({ chartSortDirection })}
+            onSelect={dashboard.selectDistrict}
+          />
+
+          <SexRatioDivergingChart
+            districts={dashboard.filteredDistricts}
+            selectedDistrictId={dashboard.state.selectedDistrictId}
+            highlightDistrictId={highlightDistrictId}
+            onSelect={dashboard.selectDistrict}
+          />
+
+          {/* Table Visual 16 Kecamatan */}
+          <DistrictTable
+            rows={dashboard.tableRows}
+            selectedDistrictId={dashboard.state.selectedDistrictId}
+            tableSort={dashboard.state.tableSort}
+            onSort={(tableSort) => dashboard.update({ tableSort })}
+            onSelect={dashboard.selectDistrict}
+            onReset={dashboard.reset}
+          />
+
+        </div>
       </main>
-      <footer className="site-footer">
-        <p><strong>Data:</strong> 2023 <span>•</span> <strong>Pertumbuhan:</strong> 2020–2023 <span>•</span> <strong>Sumber:</strong> BPS Kota Semarang, Kota Semarang Dalam Angka 2024, Tabel 3.1.1.</p>
-        <p>Disusun untuk analisis dan pendidikan; bukan produk resmi BPS atau Pemerintah Kota Semarang.</p>
-      </footer>
+
+      {/* Bottom Tab Bar */}
+      <div className="pbi-tabbar">
+        <button className="pbi-tab pbi-tab--active" type="button">Overview</button>
+      </div>
     </div>
   )
 }
